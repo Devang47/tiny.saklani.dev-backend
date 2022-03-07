@@ -51,7 +51,7 @@ export const getFullURL = async (req, res) => {
       res.status(404).send({ error: 'Not found' }).end()
       return
     }
-    res.send({ data: result })
+    res.send({ url: result[0].url, data: result[0] })
     return
   } catch (error) {
     console.log(error);

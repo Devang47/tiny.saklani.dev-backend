@@ -14,7 +14,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use('/', router);
 
 app.all('*', (req, res) => {
-  res.status(405).send('not a valid route');
+  res.status(405).json({ error: 'not a valid route' }).end();
 });
 
 const start = async () => {

@@ -1,9 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import connectToDb from './db/connect.js';
-import router from './routes/Video.js';
+import router from './routes/Shorten.js';
 
 const app = express();
 dotenv.config();
@@ -21,8 +20,10 @@ app.all('*', (req, res) => {
 const start = async () => {
   try {
     await connectToDb(process.env.URI);
-    app.listen(process.env.PORT, () => {
-      console.log('Listening on PORT: ' + process.env.PORT);
+
+    const PORT = process.env.PORT || 8080
+    app.listen(PORT, () => {
+      console.log('Listening on PORT: ' + PORT);
     });
   } catch (error) {
     console.log(error);

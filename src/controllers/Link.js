@@ -8,14 +8,15 @@ dotenv.config();
 export const createShortUrl = async (req, res) => {
   const { url, created } = req.body;
   if (!url) {
-    res.status(400).send('Incomplete data');
+    res.status(400).send({ error: 'Incomplete data' });
     return
   }
 
   const result = await minifyUrl(url, created);
 
   if (result.error) {
-    res.status(400).json({ error: result.error });
+    res.status(400).json({ error: result.error || 'not found' });
+    console.log('error here');
     return;
   }
   res.send(result);
@@ -41,7 +42,7 @@ const minifyUrl = async (url, created) => {
 export const getFullURL = async (req, res) => {
   const { url } = req.body
   if (!url) {
-    res.status(400).send('Incomplete data');
+    res.status(400).send({ error: 'Incomplete data' });
     return
   }
 
@@ -55,7 +56,7 @@ export const getFullURL = async (req, res) => {
     return
   } catch (error) {
     console.log(error);
-    res.status(400).send(error).end()
+    res.status(400).send({ error }).end()
     return
   }
 }
